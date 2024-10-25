@@ -6,7 +6,9 @@ This guide provides steps to measure **throughput** and **latency** across clust
 
 ---
 
-iperf3 is ......
+iperf3 is ...... 
+
+throughput tesitng is ....
 
 ## **Cilium Network Performance Testing**
 
@@ -96,37 +98,57 @@ The throughput test ran for 10 seconds, measuring the data sent between the clie
 
 ---
 
+**Deleting Containers on Docker:**
+
+Run "docker ps" to check how many containers are running: 
+```bash
+docker ps
+```
+To stop and remove all containers:
+```bash
+docker rm -f $(docker ps -a -q)
+```
+
+
 ## **Larger Data Testing**
 
-1. **Create a Large Cluster**
+1. **Create a Large Cluster for Calico and Cilium:**
    ```bash
-   kind create cluster --config kind-config-large.yaml --name larger-cluster
+   kind create cluster --config cilium-cluster-config.yaml --name cilium-cluster
+   kind create cluster --config calico-cluster-config.yaml --name calico-cluster
    ```
 
 2. **Increase the Number of Pods**
-   To scale up the workload, increase the number of pods. Example to create 100 NGINX pods:
+   To scale up the workload, first create ngnix deployment then increase the number of pods. Example to create 50 NGINX pods:
    ```bash
-   kubectl scale deployment nginx --replicas=100
+   kubectl create deployment nginx --image=nginx
+   kubectl scale deployment nginx --replicas=50
    ```
 
-3. **Apply StatefulSets** 
+3. ***Throughput Testing***
 
-   StatefulSets simulate how Calico and Cilium handle networking for stateful applications:
+   After deploying the pods, we need to set up a iperf3 server for thorughput testing
+
+   A. Create a headless service for the server:
    ```bash
-   kubectl apply -f stateful.yaml --context kind-calico-cluster
-   kubectl apply -f stateful.yaml --context kind-cilium-cluster
+   kubectl apply -f iperf-server.yaml
    ```
 
-4. ***Throughput Testing***
-
-   After deploying the pods and statefulsets, you need to simuate high network traffic. 
-
-   A. Access each pod in a cluster:
+   B. Deply iperf3 server pod:
    ```bash
-   kubectl exec -it redis-0 --context kind-calico-cluster -- bash
-   
-   kubectl exec -it redis-0 --context kind-cilium-cluster -- bash
+   kubectl run iperf-server --image=networkstatic/iperf3 --command -- iperf3 -s
    ```
+
+   C. Deploy iperf3 clinet pod to test throughput:
+   ```bash
+   kubectl run iperf-client --image=networkstatic/iperf3 --command -- iperf3 -c iperf-server.default.svc.cluster.local
+   ```
+
+4. ***Testing Beigns: ***
+Try ocmparing parallel streams for a heavier load:
+```bash
+kubectl exec iperf-client -- iperf3 -c iperf-server.default.svc.cluster.local -P 10
+```
 ---
 
 ## **Conclusion**
