@@ -6,9 +6,9 @@ This guide provides steps to measure **throughput** and **latency** across clust
 
 ---
 
-iperf3 is ...... 
+iperf3 is an open-source tool that measures network bandwidth and throughput between two systems.
 
-throughput tesitng is ....
+Throughput is the rate at which data is delivered over a network connection which canb be measured in Mbps and Gbps.
 
 ## **Cilium Network Performance Testing**
 
@@ -144,8 +144,9 @@ docker rm -f $(docker ps -a -q)
    kubectl run iperf-client --image=networkstatic/iperf3 --command -- iperf3 -c iperf-server.default.svc.cluster.local
    ```
 
-4. ***Testing Beigns: ***
-Try ocmparing parallel streams for a heavier load:
+4. **Testing Beigns:**
+
+Try comparing parallel streams in a heavy load:
 ```bash
 kubectl exec iperf-client -- iperf3 -c iperf-server.default.svc.cluster.local -P 10
 ```
