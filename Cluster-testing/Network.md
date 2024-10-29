@@ -119,7 +119,7 @@ docker rm -f $(docker ps -a -q)
    ```
 
 2. **Increase the Number of Pods**
-   To scale up the workload, first create ngnix deployment then increase the number of pods. Example to create 50 NGINX pods:
+   To scale up the workload, first create ngnix deployment then increase the number of pods for throughput testing adn creating high traffic. Example to create 50 NGINX pods:
    ```bash
    kubectl create deployment nginx --image=nginx
    kubectl scale deployment nginx --replicas=50
@@ -145,6 +145,31 @@ docker rm -f $(docker ps -a -q)
    ```
 
 4. **Testing Beigns:**
+
+   A. Make sure pod are running(iperf-client and ierpf-server status should be RUNNING).
+   ```
+   kubectl get pods
+   ```
+   Debugging Using Terminal:
+   Make sure all nodes are ready.
+   ```
+   kubectl get nodes
+   ```
+   For more infomration on why a node is failing use:
+   ```
+   kubectl describe node <node-name>
+   ```
+
+   <br>
+   Or try examining different different events:
+   <br>
+   This can check what is stopped the pods from running.
+
+   ``` bash
+   kubectl describe pod iperf-client
+   kubectl describe pod iperf-server
+   ```
+
 
 Try comparing parallel streams in a heavy load:
 ```bash
