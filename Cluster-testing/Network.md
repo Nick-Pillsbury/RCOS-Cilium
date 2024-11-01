@@ -110,7 +110,12 @@ docker rm -f $(docker ps -a -q)
 ```
 
 
-## **Larger Data Testing**
+## **Larger Data Testing(Calico Testing)**
+
+** Make sure you do this **:
+```
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
 
 1. **Create a Large Cluster for Calico and Cilium:**
    ```bash
@@ -175,6 +180,14 @@ Try comparing parallel streams in a heavy load:
 ```bash
 kubectl exec iperf-client -- iperf3 -c iperf-server.default.svc.cluster.local -P 10
 ```
+---
+
+Check logs to get more info on;
+```bash
+kubectl logs iperf-server
+
+```
+
 ---
 
 ## **Conclusion**
