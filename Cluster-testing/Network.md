@@ -112,9 +112,14 @@ docker rm -f $(docker ps -a -q)
 
 ## **Larger Data Testing(Calico Testing)**
 
+** Make sure you do this **:
+```
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
 
-1. **Create a Large Cluster for Calico:**
+1. **Create a Large Cluster for Calico and Cilium:**
    ```bash
+   kind create cluster --config cilium-cluster-config.yaml --name cilium-cluster
    kind create cluster --config calico-cluster-config.yaml --name calico-cluster
    ```
 
@@ -124,11 +129,6 @@ docker rm -f $(docker ps -a -q)
    kubectl create deployment nginx --image=nginx
    kubectl scale deployment nginx --replicas=50
    ```
-
-** Make sure you do this **:
-```
-kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-```
 
 3. ***Throughput Testing***
 
@@ -149,38 +149,38 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
    kubectl run iperf-client --image=networkstatic/iperf3 --command -- iperf3 -c iperf-server.default.svc.cluster.local
    ```
 
-   ** Make sure you do this **:
-```
-kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-```
-
-4. **Chek Node Status:**
+4. **Testing Beigns:**
 
    A. Make sure pod are running(iperf-client and ierpf-server status should be RUNNING).
    ```
    kubectl get pods
    ```
-
    Debugging Using Terminal:
    Make sure all nodes are ready.
    ```
    kubectl get nodes
    ```
-
    For more infomration on why a node is failing use:
    ```
+   kubectl describe node <node-name>
+   ```
+
+   <br>
+   Or try examining different different events:
+   <br>
+   This can check what is stopped the pods from running.
+
+   ``` bash
    kubectl describe pod iperf-client
    kubectl describe pod iperf-server
    ```
 
-5. **Run Larger Test**
 
-Try running parallel streams in a heavy load:
+Try comparing parallel streams in a heavy load:
 ```bash
 kubectl exec iperf-client -- iperf3 -c iperf-server.default.svc.cluster.local -P 10
 ```
-
-This will test with 10 parallel streams to simulate a higher load and measure performance more rigorously.
+---
 
 Check logs to get more info on;
 ```bash
@@ -188,18 +188,8 @@ kubectl logs iperf-server
 
 ```
 
-6. **View and Analyze Results**
-
-Check for Test Results:
-```bash
-kubectl logs iperf-server
-```
-<br>
-This will allow you to see detailed output of the iperf test with metrics like transfer size, bitrate, and retransmissions.
-<br>
-    ![Cilium Large Test:](./Testing/Cilium-test.png)
-
 ---
+
 ## **Conclusion**
 
 Calico performed slightly better in terms of throughput, packet retransmissions, and congestion window growth, but the differences were minimal.
