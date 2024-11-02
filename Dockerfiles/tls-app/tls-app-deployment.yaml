@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tls-app
+  labels:
+    app: tls-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tls-app
+  template:
+    metadata:
+      labels:
+        app: tls-app
+    spec:
+      containers:
+        - name: tls-app
+          image: tls-app:latest
+          ports:
+            - containerPort: 8443
+          volumeMounts:
+            - name: tls-cert
+              mountPath: /app/cert.pem
+              subPath: cert.pem
+            - name: tls-key
+              mountPath: /app/key.pem
+              subPath: key.pem
+      volumes:
+        - name: tls-cert
+          secret:
+            secretName: tls-cert
+            items:
+              - key: cert.pem
+                path: cert.pem
+        - name: tls-key
+          secret:
+            secretName: tls-cert
+            items:
+              - key: key.pem
+                path: key.pem
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tls-app
+spec:
+  selector:
+    app: tls-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
