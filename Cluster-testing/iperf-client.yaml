@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-client
+  labels:
+    app: iperf-client
+spec:
+  restartPolicy: Never
+  containers:
+  - name: iperf-client
+    image: networkstatic/iperf3
+    command: ["/bin/sh", "-c", "sleep infinity"]

@@ -117,6 +117,15 @@ docker rm -f $(docker ps -a -q)
    ```bash
    kind create cluster --config calico-cluster-config.yaml --name calico-cluster
    ```
+   To delete:
+   ```bash
+   kind delete cluster --name calico-cluster
+   ```
+
+** Make sure you do this **:
+```
+<!-- kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml -->
+```
 
 2. **Increase the Number of Pods**
    To scale up the workload, first create ngnix deployment then increase the number of pods for throughput testing adn creating high traffic. Example to create 50 NGINX pods:
@@ -124,11 +133,6 @@ docker rm -f $(docker ps -a -q)
    kubectl create deployment nginx --image=nginx
    kubectl scale deployment nginx --replicas=50
    ```
-
-** Make sure you do this **:
-```
-kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-```
 
 3. ***Throughput Testing***
 
@@ -144,9 +148,14 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
    kubectl run iperf-server --image=networkstatic/iperf3 --command -- iperf3 -s
    ```
 
-   C. Deploy iperf3 clinet pod to test throughput:
+   C. Deploy iperf-client Pod:
    ```bash
-   kubectl run iperf-client --image=networkstatic/iperf3 --command -- iperf3 -c iperf-server.default.svc.cluster.local
+   kubectl apply -f iperf-client.yaml
+   ```
+
+   C. Run throughput testing
+   ```bash
+   kubectl exec iperf-client -- iperf3 -c iperf-server.default.svc.cluster.local -P 10
    ```
 
    ** Make sure you do this **:
@@ -156,7 +165,7 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 4. **Chek Node Status:**
 
-   A. Make sure pod are running(iperf-client and ierpf-server status should be RUNNING).
+   A. Make sure all pods are running(iperf-client and ierpf-server status should be RUNNING).
    ```
    kubectl get pods
    ```
@@ -197,12 +206,15 @@ kubectl logs iperf-server
 <br>
 This will allow you to see detailed output of the iperf test with metrics like transfer size, bitrate, and retransmissions.
 <br>
-    ![Cilium Large Test:](./Testing/Calico-large-testing.png)
+![Cilium Large Test:]( /Testing/CiliumLargeTestResultpt1.png)
+![Cilium Large Test:]( /Testing/CiliumLargeTestResultpt2.png)
+![Cilium Large Test:]( /Testing/CiliumLargeTestResultpt3.png)
 
 <br>
-Calico's performance is ....
+The iperf3 network large test result for Cilium reveal that the iperf-client successfully connected to the iperf-server on 10 parallel streams, measuring a high network throughput. Throughout the 10 seconds, the client transferred a total of 39.4 GB which averaged a rate of 33.8 GB/sec. The individual streams consistently reached bitrates of around 3.38–4.56 Gbits/sec, with some fluctuation likely due to minor retransmissions (113 in total). This performance test provides a comprehensive look at network stability and bandwidth, demonstrating that the connection can sustain high-speed data transfer with minimal packet loss and congestion.
 
 ---
 ## **Conclusion**
 
+**Small Test Case::**
 Calico performed slightly better in terms of throughput, packet retransmissions, and congestion window growth, but the differences were minimal.
