@@ -28,7 +28,10 @@ SERVER_IP=$(kubectl get pod $SERVER_POD_NAME -n $NAMESPACE -o jsonpath='{.status
 echo "Server pod IP: $SERVER_IP"
 
 # Step 6: Run iPerf3 Test
+# Step 6: Run iPerf3 Test and Save Output in JSON Format
 echo "Running iPerf3 test from client to server..."
-kubectl exec -it $CLIENT_POD_NAME -n $NAMESPACE -- iperf3 -c $SERVER_IP
+kubectl exec -it $CLIENT_POD_NAME -n $NAMESPACE -- iperf3 -c $SERVER_IP --json > iperf3-results.json
 
 echo "Network performance test complete."
+
+

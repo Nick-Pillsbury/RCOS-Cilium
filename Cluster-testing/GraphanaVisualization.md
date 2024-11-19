@@ -8,7 +8,31 @@ Small Tests:
 
 Run the command:
 ```bash
-kubectl exec -it iperf3-client -- iperf3 -c <server-ip> --json > iperf3-results.json
+./throughput-testing-small.sh
 ```
 
-2.
+Large Tests:
+Run the command:
+```bash
+./throughput-testing-large.sh
+```
+
+2. **Set up Prometheus**
+
+a. Add the Prometheus Helm repository:
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
+b. Install Prometheus
+```bash
+helm install prometheus prometheus-community/prometheus --namespace monitoring --create-namespace
+```
+
+3. Convert Json to Prometheus Metrics:
+
+a. Run iperf3Export.py
+```python
+python iperf3Export.py
+```
