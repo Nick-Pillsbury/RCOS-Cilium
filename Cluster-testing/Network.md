@@ -61,6 +61,19 @@ The throughput test ran for 10 seconds, measuring the data sent between client a
 
 ### **Steps**
 
+**Make sure docker is started**
+
+For Linux:
+
+Starts the docker service:
+```bash
+sudo systemctl start docker
+```
+
+For Windows:
+
+You  need to start docker desktop.
+
 1. **Create a Namespace for Throughput Testing**
    ```bash
    kubectl create namespace network-calico-performance-test
