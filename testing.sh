@@ -32,7 +32,7 @@ else
             terraform init
 
             printf "Plan and Apply the Construction of Infrastructure\n"
-            terraform apply -target="helm_release.$1" -target="azurerm_monitor_alert_prometheus_rule_group.node_recording_rules_rule_group" -target="azurerm_virtual_network.vnet" -target="azurerm_subnet.subnet" -target="azurerm_subnet.podsubnet" -target="azurerm_kubernetes_cluster.default" -target="azurerm_monitor_workspace.prom" -target="azurerm_dashboard_grafana.graf" -target="azurerm_role_assignment.grafana" -target="azurerm_monitor_data_collection_endpoint.dce" -target="azurerm_monitor_data_collection_rule.dcr" -target="azurerm_monitor_data_collection_rule_association.dcra"
+            terraform apply -target="helm_release.$1" -target="azurerm_monitor_alert_prometheus_rule_group.node_recording_rules_rule_group" -target="azurerm_virtual_network.vnet" -target="azurerm_subnet.subnet" -target="azurerm_subnet.podsubnet" -target="azurerm_kubernetes_cluster.default" -target="azurerm_monitor_workspace.prom" -target="azurerm_dashboard_grafana.graf" -target="azurerm_role_assignment.grafana" -target="azurerm_monitor_data_collection_endpoint.dce" -target="azurerm_monitor_data_collection_rule.dcr" -target="azurerm_monitor_data_collection_rule_association.dcra" -var-file="vars.tfvars"
             break
         fi
     done
