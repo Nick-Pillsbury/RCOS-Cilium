@@ -6,7 +6,8 @@ spec:
   containers:
   - name: cpu-stress-container
     image: polinux/stress-ng
-    args: ["--cpu", "8", "--timeout", "300s"]
+    command: [ "/bin/bash", "-c", "--"]
+    args: ["stress-ng --cpu 3 --vm 3 -- vm-bytes 2G --io 3" ]
     resources:
       limits:
         cpu: "4"

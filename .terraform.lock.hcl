@@ -48,6 +48,7 @@ provider "registry.terraform.io/grafana/grafana" {
   constraints = "~> 1.23.0"
   hashes = [
     "h1:5B7XgrpLtJO835MgSBb3dc2MYwflhlrqi88auq+MgOw=",
+    "h1:ivnuD6PHJ2dWtfcJAmw8TSSH7K7r9QJY9t3sFQ53lZ8=",
     "zh:0cace73a5d07744f97f13a1b47f3322e0e8762311f723939910578e301463706",
     "zh:2766e6028343fd5b7bdc463872b174ee5ca787c6a4bc39fd011144da6a0c6124",
     "zh:4bb195f472afd97bc19ae28ca8db8bacd84cfcf231626851054a1165ea09a645",
@@ -110,6 +111,7 @@ provider "registry.terraform.io/hashicorp/tls" {
   constraints = ">= 4.0.0"
   hashes = [
     "h1:dYSb3V94K5dDMtrBRLPzBpkMTPn+3cXZ/kIJdtFL+2M=",
+    "h1:n3M50qfWfRSpQV9Pwcvuse03pEizqrmYEryxKky4so4=",
     "zh:10de0d8af02f2e578101688fd334da3849f56ea91b0d9bd5b1f7a243417fdda8",
     "zh:37fc01f8b2bc9d5b055dc3e78bfd1beb7c42cfb776a4c81106e19c8911366297",
     "zh:4578ca03d1dd0b7f572d96bd03f744be24c726bfd282173d54b100fd221608bb",
