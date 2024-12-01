@@ -83,22 +83,44 @@ Decrease in network jitter -->
 
 ## Process
 
+Cilium infrastructure is launched via Terraform and created on Azure using resource-targeting. A bash script is deployed to automate deployment and choose the specific tuning parameter. Results and metrics from testing are gathered through a Prometheus and Grafana backend to scrape and visualize the data. Testing of network and compute resources utilizes the built-in netperf package in the Cilium-cli and customized yaml files (stress-ng) to simulate real-world workloads. 
 
-The goal is to be able to do this in a github action.
-See for the proposed action
-Though first we have to change the parameters through a script
+Future goals of the benchmark is to fully automate the process through github actions. The proposed github action workflow will run periodically as a cron job, running the bash script, testing via netperf/yaml, and gather the data. 
+<!-- See for the proposed action -->
+<!-- Though first we have to change the parameters through a script
 See "SCRIPT" for the script
 
 We will be using "Kernel" for all of our testing
 
 
-Using bash, a script will run our Cilium infrastructure for varying intervals of times. This script will be ran for each tuning parameters and allows us to mimic usage of contianerized applications for short-term and long-term capabilities. Additionally, through the use of Prometheus and Grafana we can gather and visualize the network and CPU perfomance impact each tuning parameters has. We will then automate this testing process using github actions to test on a daily/weekly schedule. 
+Using bash, a script will run our Cilium infrastructure for varying intervals of times. This script will be ran for each tuning parameters and allows us to mimic usage of contianerized applications for short-term and long-term capabilities. Additionally, through the use of Prometheus and Grafana we can gather and visualize the network and CPU perfomance impact each tuning parameters has. We will then automate this testing process using github actions to test on a daily/weekly schedule.  -->
 
 ## Testing Environment
 
 ### Testing Hardware
 
+|Item |Description|
+|CPU|13th Gen Intel(R) Core(TM) i9-13900HX, FCBGA1964, 2.20GHz, 24 cores / 32 threads |
+|Mainboard|LENOVO LNVNB161216 |
+|Memory| |
+|network Card| |
+|Kernel| |
+
+
 ### Testing Configuration
+
+|Configuration Name | Description|
+|Baseline | Kubernetes, no Cilium|
+|Cilium (legacy host-routing) | Cilium 1.16.0, legacy host-routing, kube-proxy replacement, No CT|
+|Cilium | Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (netkit)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (Big TCP)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (Hubble Off)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (Iptables Bypass)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (MTU)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (Bandwidth Manager)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (BBR congestion)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (XDP)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
 
 
 ## Results
