@@ -31,7 +31,7 @@ Network Jitter \
     The variation of packet delay or latency over a single TCP connection.
 
 ## Tuning parameters
-See https://docs.cilium.io/en/stable/operations/performance/tuning/ for the tuning parameters to change.
+See https://docs.cilium.io/en/stable/operations/performance/tuning/ for the tuning parameters to change. \
 We will only be testing the following parameters: \
 BIG TCP \
 MTU \
@@ -81,7 +81,7 @@ Bypassing Iptables Tracking
 Improvements in latency and throughput
 Decrease in network jitter -->
 
-## Process
+## Steps & Processes
 
 Cilium infrastructure is launched via Terraform and created on Azure using resource-targeting. A bash script is deployed to automate deployment and choose the specific tuning parameter. Results and metrics from testing are gathered through a Prometheus and Grafana backend to scrape and visualize the data. Testing of network and compute resources utilizes the built-in netperf package in the Cilium-cli and customized yaml files (stress-ng) to simulate real-world workloads. 
 
