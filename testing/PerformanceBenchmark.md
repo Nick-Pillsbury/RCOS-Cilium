@@ -33,15 +33,15 @@ Network Jitter \
 ## Tuning parameters
 See https://docs.cilium.io/en/stable/operations/performance/tuning/ for the tuning parameters to change. \
 We will only be testing the following parameters: \
+Netkit Device Mode \
 BIG TCP \
+Hubble Obserbability \
+Bypassing Iptables Tracking \
 MTU \
+Bandwith Manager \
 BBR Congestion Control for Pods \
 XDP Acceleration \
-eBPF Map Sizing \
-Hubble Obserbability \
-Bandwith Manager \
-Netkit Device Mode \
-Bypassing Iptables Tracking \
+<!-- eBPF Map Sizing \ -->
 
 <!-- ## Expected Results
 BIG TCP
@@ -102,10 +102,10 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 |Item |Description |
 |-----|------------|
 |CPU|13th Gen Intel(R) Core(TM) i9-13900HX, FCBGA1964, 2.20GHz, 24 cores / 32 threads |
-|Mainboard|LENOVO LNVNB161216 |
+|Mainboard|LENOVO LNVNB161216 SDK0T76461 WIN|
 |Memory| |
-|network Card| |
-|Kernel| |
+|Network Card| Intel(R) Wi-Fi 6E AX211 160MHz|
+|Kernel| Microsoft Windows 10.0.22621.4455|
 
 
 ### Testing Configuration
