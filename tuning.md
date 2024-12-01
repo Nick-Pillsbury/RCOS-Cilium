@@ -5,43 +5,43 @@ Performance testing is a form of quality assurance, evaluating an application/sy
 
 Cilium is ...
 
-We seek to construct a test suite targeting various Cilium tuning parameters and evaulate the performance and capabilites of each parameter. To accomplish our goals, we utilize Terraform's resource-targeting mechanism allowing the freedom to enable or disable certain tuning parameters. Additionally, we aim to overcome two pitfalls observed from the current Cilium performance benchmark. [1] Firstly, pre-existing Cilium documentation of performance is outdated and no longer holds any value to the existing Cilium user base. We seek to rectify this by replicating Cilium's pre-existing performance test on the updated versions of Cilium. Secondly, Cilium's performance benchmark lacks scope as only 3 metrics are utilized in their testing. By expanding the tested metrics from 3 to 7, we can improve the usability and insight the performance banchmark provides. 
+We seek to construct a test suite targeting various Cilium tuning parameters and evaulate the performance and capabilites of each parameter. To accomplish our goals, we utilize Terraform's resource-targeting mechanism allowing the freedom to enable or disable certain tuning parameters. Additionally, we aim to overcome two pitfalls observed from the current Cilium performance benchmark [1]. Firstly, pre-existing Cilium documentation of performance is outdated and no longer holds any value to the existing Cilium user base. We seek to rectify this by replicating Cilium's pre-existing performance test on the updated versions of Cilium. Secondly, Cilium's performance benchmark lacks scope as only 3 metrics are utilized in their testing. By expanding the tested metrics from 3 to 7, we can improve the usability and insight the performance banchmark provides. 
 
 ## Metrics Tested
 
-Throughput
-    Maximum transfer rate via a single TCP connection and the total transfer rate of 32 accumulated connections. [1]
+Throughput \
+    Maximum transfer rate via a single TCP connection and the total transfer rate of 32 accumulated connections [1].
 
-Request/Response Rate
-    The number of request/response messages per second that can be transmitted over a single TCP connection and over 32 parallel TCP connections. [1]
+Request/Response Rate \
+    The number of request/response messages per second that can be transmitted over a single TCP connection and over 32 parallel TCP connections [1].
 
-Connections Rate
-    The number of connections per second that can be established in sequence with a single request/response payload message transmitted for each new connection. A single process and 32 parallel processes are tested. [1]
+Connections Rate \
+    The number of connections per second that can be established in sequence with a single request/response payload message transmitted for each new connection. A single process and 32 parallel processes are tested [1].
 
-Latency
+Latency \
     Measurement of the delay of a packets's arrival to its destination from a single TCP connection.
 
-CPU Utilization
+CPU Utilization \
     Percentage of the CPU's processing capacity used by a single TCP connection.
 
-Memory Usage
+Memory Usage \
     The required amount of RAM to faciliate a single TCP connection.
 
-Network Jitter
+Network Jitter \
     The variation of packet delay or latency over a single TCP connection.
 
 ## Tuning parameters
 See https://docs.cilium.io/en/stable/operations/performance/tuning/ for the tuning parameters to change.
-We will only be testing the following parameters:
-BIG TCP
-MTU
-BBR Congestion Control for Pods
-XDP Acceleration
-eBPF Map Sizing
-Hubble Obserbability
-Bandwith Manager
-Netkit Device Mode
-Bypassing Iptables Tracking
+We will only be testing the following parameters: \
+BIG TCP \
+MTU \
+BBR Congestion Control for Pods \
+XDP Acceleration \
+eBPF Map Sizing \
+Hubble Obserbability \
+Bandwith Manager \
+Netkit Device Mode \
+Bypassing Iptables Tracking \
 
 <!-- ## Expected Results
 BIG TCP
@@ -99,7 +99,8 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 
 ### Testing Hardware
 
-|Item |Description|
+|Item |Description |
+|-----|------------|
 |CPU|13th Gen Intel(R) Core(TM) i9-13900HX, FCBGA1964, 2.20GHz, 24 cores / 32 threads |
 |Mainboard|LENOVO LNVNB161216 |
 |Memory| |
@@ -109,7 +110,8 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 
 ### Testing Configuration
 
-|Configuration Name | Description|
+|Configuration Name |Description |
+|-------------------|------------|
 |Baseline | Kubernetes, no Cilium|
 |Cilium (legacy host-routing) | Cilium 1.16.0, legacy host-routing, kube-proxy replacement, No CT|
 |Cilium | Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
