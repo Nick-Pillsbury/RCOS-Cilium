@@ -83,7 +83,7 @@ Decrease in network jitter -->
 
 ## Steps & Processes
 
-Cilium infrastructure is launched via Terraform and created on Azure using resource-targeting. A bash script is deployed to automate deployment and choose the specific tuning parameter. Results and metrics from testing are gathered through a Prometheus and Grafana backend to scrape and visualize the data. Testing of network and compute resources utilizes the built-in netperf package in the Cilium-cli and customized yaml files (stress-ng) to simulate real-world workloads. 
+Cilium infrastructure is launched via Terraform and created on Azure using resource-targeting. A bash script is deployed to automate deployment and choose the specific tuning parameter. Results and metrics from testing are gathered through a Prometheus and Grafana backend to scrape and visualize the data. Testing of network and compute resources utilizes the built-in netperf package in the Cilium-cli, provided ansible play-books [1], and customized yaml files (stress-ng) to simulate real-world workloads. 
 
 Future goals of the benchmark is to fully automate the process through github actions. The proposed github action workflow will run periodically as a cron job, running the bash script, testing via netperf/yaml, and gather the data. 
 <!-- See for the proposed action -->
@@ -113,20 +113,29 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 |Configuration Name |Description |
 |-------------------|------------|
 |Baseline | Kubernetes, no Cilium|
-|Cilium (legacy host-routing) | Cilium 1.16.0, legacy host-routing, kube-proxy replacement, No CT|
-|Cilium | Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (netkit)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (Big TCP)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (Hubble Off)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (Iptables Bypass)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (MTU)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (Bandwidth Manager)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (BBR congestion)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
-|Cilium (XDP)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement, No CT|
+|Cilium (legacy host-routing) | Cilium 1.16.0, legacy host-routing, kube-proxy replacement|
+|Cilium | Cilium 1.16.0, eBPFhost-routing, eBPF-based kube-proxy replacement, eBPF-based masquerading|
+|Cilium (netkit)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement|
+|Cilium (Big TCP)| Cilium 1.16.0, eBPFhost-routing, eBPF-based kube-proxy replacement, eBPF-based masquerading|
+|Cilium (Hubble Off)| Cilium 1.16.0, Hubble Off|
+|Cilium (Iptables Bypass)| Cilium 1.16.0, eBPF-based kube-proxy replacement, eBPF-based masquerading or no masquerading|
+|Cilium (MTU)| Cilium 1.16.0, eBPFhost-routing, kube-proxy replacement|
+|Cilium (Bandwidth Manager)| Cilium 1.16.0, eBPF-based kube-proxy replacement|
+|Cilium (BBR congestion)| Cilium 1.16.0, eBPFhost-routing, Bandwidth manager|
+|Cilium (XDP)| Cilium 1.16.0, eBPF-based kube-proxy replacement, native XDP driver|
 
 
 ## Results
-To Be Determined...
+| |Baseline |Cilium(legacy host-routing) |Cilium |Cilium(netkit) |Cilium(Big TCP) | Cilium(Hubble Off) | Cilium(Iptables Bypass) | Cilium(MTU) | Cilium(Bandwidth Manager) |Cilium(BBR congestion)|Cilium(XDP)|
+|---|---|---|---|---|---|---|---|---|---|---|---|
+|Throughput|0|0|0|0|0|0|0|0|0|0|0|
+|Request/Response Rate|0|0|0|0|0|0|0|0|0|0|0|
+|Connections Rate|0|0|0|0|0|0|0|0|0|0|0|
+|Latency|0|0|0|0|0|0|0|0|0|0|0|
+|CPU Utilization|0|0|0|0|0|0|0|0|0|0|0|
+|Memory Usage|0|0|0|0|0|0|0|0|0|0|0|
+|Network Jitter|0|0|0|0|0|0|0|0|0|0|0|
+
 
 ## Sources
 

@@ -13,6 +13,7 @@ tuningparameters=(
     "cilium-iptables-bypass"
     "cilium-netkit"
     "cilium-xdp"
+    "cilium-eBPF-Host-Routing"
 )
 
 VALIDPARAMETER=0
@@ -20,7 +21,7 @@ VALIDPARAMETER=0
 if [[ $# -eq 0 ]]; then 
     printf "ERROR: 0 arguments passed to testing.sh\n"
     printf "Please specify one of the following tuning parameter to deploy:\n"
-    printf "\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n"
+    printf "\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n\tcilium-eBPF-Host-Routing\n"
         
 else 
     for parameter in ${tuningparameters[@]}; do
