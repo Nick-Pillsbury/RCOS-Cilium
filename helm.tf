@@ -329,7 +329,7 @@ resource "helm_release" "cilium-xdp" {
   }
 }
 
-resource "helm_release" "cilium-eBPF-Host-Routing" {
+resource "helm_release" "cilium-eBPF" {
   name       = "cilium-eBPF-Host-Routing"
   repository = "https://helm.cilium.io/"
   chart      = "cilium"

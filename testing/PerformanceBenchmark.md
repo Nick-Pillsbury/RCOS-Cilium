@@ -136,6 +136,7 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 |Memory Usage|0|0|0|0|0|0|0|0|0|0|0|
 |Network Jitter|0|0|0|0|0|0|0|0|0|0|0|
 
+
 ![Cilium (legacy host-routing)](./images/cilium-base.png)
 
 
