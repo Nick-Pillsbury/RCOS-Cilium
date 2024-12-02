@@ -3,3 +3,7 @@ https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/7L0
 https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/ThF4KnzdSoNRawtfLfSxmkLbrNodhvoX
 https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/A6OZM7FpCsk91QQulsBeoR7Td93c6ogn
 
+Cilium:
+https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/lWSHgtKKwoTnpUJi3iEV2Oc88RnRkTc7
+https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/Bs9YXzfeFCUWnBAPfeDUHGnn0skEO44T
+https://graf-test1-ghhcajgfcmh7bhbg.eus.grafana.azure.com/dashboard/snapshot/IoVnK0ggoqodCz97I8KWTzxHnMK6mqOb
