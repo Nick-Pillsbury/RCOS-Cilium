@@ -139,7 +139,8 @@ Using bash, a script will run our Cilium infrastructure for varying intervals of
 Cilium (legacy host-routing):
 ![Cilium (legacy host-routing)](./images/cilium-base.png)
 
-
+Cilium:
+![Cilium](./images/cilium-ebpf.png)
 ## Sources
 
 [1] https://docs.cilium.io/en/stable/operations/performance/benchmark/

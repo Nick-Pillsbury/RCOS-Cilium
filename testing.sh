@@ -7,7 +7,7 @@
 tuningparameters=(
     "baseline"
     "cilium-base"
-    "cilium-eBPF"
+    "cilium-ebpf"
     "cilium-netkit"
     "cilium-bigtcp"
     "cilium-hubble-off"
@@ -22,7 +22,7 @@ VALIDPARAMETER=0
 if [[ $# -eq 0 ]]; then 
     printf "ERROR: 0 arguments passed to testing.sh\n"
     printf "Please specify one of the following tuning parameter to deploy:\n"
-    printf "\tbaseline\n\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n\tcilium-eBPF\n"
+    printf "\tbaseline\n\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n\tcilium-ebpf\n"
         
 else 
     for parameter in ${tuningparameters[@]}; do
@@ -54,7 +54,7 @@ else
     if [[ $VALIDPARAMETER -eq 0 ]]; then 
         printf "ERROR: Unknown tuning parameter passed to testing.sh\n"
         printf "Please specify one of the following tuning parameter to deploy:\n"
-        printf "\tbaseline\n\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n\tcilium-eBPF\n"
+        printf "\tbaseline\n\tcilium-base\n\tcilium-bandwidth\n\tcilium-bbr-congestion\n\tcilium-bigtcp\n\tcilium-hubble-off\n\tcilium-iptables-bypass\n\tcilium-netkit\n\tcilium-xdp\n\tcilium-ebpf\n"
     fi
 fi
 

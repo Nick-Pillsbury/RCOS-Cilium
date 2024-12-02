@@ -329,8 +329,8 @@ resource "helm_release" "cilium-xdp" {
   }
 }
 
-resource "helm_release" "cilium-eBPF" {
-  name       = "cilium-eBPF-Host-Routing"
+resource "helm_release" "cilium-ebpf" {
+  name       = "cilium-ebpf"
   repository = "https://helm.cilium.io/"
   chart      = "cilium"
   version    = "1.16.0" # specify the version you want to use
