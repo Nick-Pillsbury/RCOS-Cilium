@@ -8,6 +8,14 @@ CLIENT_POD_NAME="iperf3-client"
 echo "Creating namespace: $NAMESPACE"
 kubectl create namespace $NAMESPACE
 
+# Step 1.5: Create Service Account and Bind Permissions
+echo "Creating service account for the namespace"
+kubectl create serviceaccount default -n $NAMESPACE
+kubectl create rolebinding default-sa-binding \
+  --clusterrole=edit \
+  --serviceaccount=$NAMESPACE:default \
+  --namespace=$NAMESPACE
+
 # Step 2: Deploy Server Pod
 echo "Deploying iPerf3 server pod:"
 kubectl run $SERVER_POD_NAME --image=networkstatic/iperf3 --namespace=$NAMESPACE --command -- iperf3 -s
@@ -27,7 +35,6 @@ kubectl wait --for=condition=Ready pod/$CLIENT_POD_NAME -n $NAMESPACE --timeout=
 SERVER_IP=$(kubectl get pod $SERVER_POD_NAME -n $NAMESPACE -o jsonpath='{.status.podIP}')
 echo "Server pod IP: $SERVER_IP"
 
-# Step 6: Run iPerf3 Test
 # Step 6: Run iPerf3 Test and Save Output in JSON Format
 echo "Running iPerf3 test from client to server..."
 kubectl exec -it $CLIENT_POD_NAME -n $NAMESPACE -- iperf3 -c $SERVER_IP --json > iperf3-results.json
