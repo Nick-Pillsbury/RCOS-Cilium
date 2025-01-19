@@ -1,5 +1,3 @@
-# Setting up Prometheus
-
 1. Add instruction
 ```bash
 export PROMETHEUS_CONFIG_DIR=./Prometheus

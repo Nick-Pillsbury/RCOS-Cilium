@@ -1,42 +1,92 @@
-# Integrating iper3 tesitng into Graphaa:
+# Integrating iPerf3 Testing with Prometheus Monitoring
 
+This guide walks through setting up iPerf3 testing with Prometheus monitoring and Grafana visualization in your environment.
 
+## Prerequisites
 
-1. **Set up Iperf3 output to a json file:**
+- Docker and Docker Compose installed
+- Helm package manager
+- kubectl configured with your cluster
+- Grafana
 
-Small Tests:
+## 1. Running iPerf3 Tests
 
-Run the command:
+### Small-Scale Testing
+Execute the small test suite:
 ```bash
 ./throughput-testing-small.sh
 ```
 
-Large Tests:
-Run the command:
+### Large-Scale Testing
+Execute the comprehensive test suite:
 ```bash
 ./throughput-testing-large.sh
 ```
 
-2. **Set up Prometheus**
+## 2. Prometheus Setup
 
-a. Add the Prometheus Helm repository:
+### Adding Prometheus Repository
 ```bash
+# Add the Prometheus Helm repository
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+# Update Helm repositories
 helm repo update
 ```
 
-Run Pushgateway to push custom metrics to Prometheus temporarily
-``` bash
+### Setting up Pushgateway
+Deploy Pushgateway to temporarily store metrics:
+```bash
 docker run -d -p 9091:9091 prom/pushgateway
 ```
-b. Install Prometheus
+
+### Installing Prometheus
+Deploy Prometheus in your cluster:
 ```bash
-helm install prometheus prometheus-community/prometheus --namespace monitoring --create-namespace
+helm install prometheus prometheus-community/prometheus \
+    --namespace monitoring \
+    --create-namespace
 ```
 
-<!-- 3. Convert Json to Prometheus Metrics:
+## 3. Docker Compose Configuration
 
-a. Run iperf3Export.py
-```python
-python iperf3Export.py
-``` -->
+Create a `docker-compose.yml` file in your project directory and start the services:
+```bash
+docker-compose up -d
+```
+
+## 4. Grafana Installation
+
+### macOS
+Install via Homebrew:
+```bash
+brew install grafana
+```
+
+### Windows
+Download and install from: [Grafana Windows Installer](https://grafana.com/grafana/download?platform=windows)
+
+## 5. Grafana Configuration
+
+### Accessing Grafana
+- URL: http://localhost:3000/login
+- Default credentials:
+  - Username: admin
+  - Password: cilium
+
+### Adding Prometheus Data Source ###
+1. Navigate to Connections
+2. Select Data Sources
+3. Click "Add Data Source"
+4. Choose "Prometheus"
+5. Configure the connection settings
+
+## Next Steps
+
+After completing the setup:
+1. Configure your Prometheus scrape configs to collect iPerf3 metrics
+2. Create Grafana dashboards to visualize the performance data
+3. Set up alerts for performance thresholds
+
+
+

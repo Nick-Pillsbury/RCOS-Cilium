@@ -3,6 +3,7 @@
 NAMESPACE="network-cilium-performance-test"
 SERVER_POD_NAME="iperf3-server"
 CLIENT_POD_NAME="iperf3-client"
+EXPORTER_POD_NAME="iperf3-exporter"
 
 # Step 1: Create Namespace
 echo "Creating namespace: $NAMESPACE"
