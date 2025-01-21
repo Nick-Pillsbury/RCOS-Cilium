@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iperfjson-app
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iperf3
+  template:
+    metadata:
+      labels:
+        app: iperf3
+    spec:
+      containers:
+      - name: iperfjson
+        image: "iperfjson-app:latest"
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 9093 # Match the service port
+        env:
+        - name: SERVER_DNS
+          value: "iperf3-server.monitoring.svc.cluster.local"

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf3-client
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "9093"
+  labels:
+    app: iperf3
+spec:
+  containers:
+  - name: iperf3
+    image: networkstatic/iperf3
+    command: ["sh", "-c", "while true; do iperf3 -c iperf3-server -t 10; sleep 60; done"]
+  - name: prometheus-exporter
+    image: prom/prometheus
+    ports:
+    - containerPort: 9093
+    command:
+    - "/bin/sh"
+    - "-c"
+    - "while true; do echo 'fake_metric 1' > /metrics; sleep 60; done;"

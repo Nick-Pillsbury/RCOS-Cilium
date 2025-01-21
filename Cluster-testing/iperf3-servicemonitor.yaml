@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iperf3-service-monitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: iperf3
+  endpoints:
+    - port: "8030" 
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - monitoring

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iperf3-exporter
+  namespace: network-cilium-performance-test
+  labels:
+    app: iperf3-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iperf3-exporter
+  template:
+    metadata:
+      labels:
+        app: iperf3-exporter
+    spec:
+      containers:
+        - name: iperf3-exporter
+          image: prom/iperf-exporter:latest  # Use the node exporter as an alternative
+          ports:
+            - containerPort: 9100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf3-exporter
+  namespace: network-cilium-performance-test
+spec:
+  selector:
+    app: iperf3-exporter
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100
+  type: ClusterIP

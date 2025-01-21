@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  prometheus:
-    image: prom/prometheus
-    ## have another ports in case port 9000 is open
-    ports:
-      - "9091:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml

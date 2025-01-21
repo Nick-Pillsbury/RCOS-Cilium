@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+RUN apk add --no-cache iperf3
+
+RUN apk add --no-cache curl
+
+RUN mkdir /exporter
+COPY iperf3-exporter /exporter/iperf3-exporter
+
+EXPOSE 9100
+
+ENTRYPOINT ["/exporter/iperf3-exporter", "-p", "9100", "-i", "10"]
