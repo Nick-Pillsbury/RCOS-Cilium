@@ -1,0 +1,8 @@
+scrape_configs:
+  - job_name: 'cilium-agent'
+    static_configs:
+      - targets: ['cilium-agent-metrics.kube-system.svc.cluster.local:9190']
+  - job_name: 'cilium-operator'
+    static_configs:
+      - targets: ['cilium-operator-metrics.kube-system.svc.cluster.local:9963']
+

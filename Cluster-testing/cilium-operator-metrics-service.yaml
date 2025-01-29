@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cilium-operator-metrics
+  namespace: kube-system
+  labels:
+    app: cilium-operator
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9091"
+spec:
+  selector:
+    io.cilium/app: operator
+    name: cilium-operator
+  ports:
+  - name: metrics
+    port: 9963
+    targetPort: 9963
+    protocol: TCP
+

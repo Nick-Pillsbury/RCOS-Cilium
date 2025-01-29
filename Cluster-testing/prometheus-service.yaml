@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-server
+  namespace: monitoring
+spec:
+  ports:
+  - name: http  # Add a name for the port
+    port: 9090  # Service port
+    targetPort: 9090  # Internal target port
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: prometheus

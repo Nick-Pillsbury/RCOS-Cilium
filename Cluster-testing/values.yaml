@@ -1,0 +1,15 @@
+kubeProxyReplacement: "true"
+autoDirectNodeRoutes: false
+enableHubble: true
+nodeSelector:
+  kubernetes.io/hostname: cilium-cluster-worker
+hubble:
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+    hostPort: 9965
+metrics:
+  enabled: true
+promethues:
+  enabled: true
