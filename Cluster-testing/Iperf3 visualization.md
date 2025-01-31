@@ -1,5 +1,4 @@
-Iperf3 visaulziation on Prometheus with Grafana as visaulziation
-
+Cilium Metric Visaulziation on Prometheus with Grafana 
 
 Prequisties:
 - Kind: creating cluster
@@ -28,12 +27,22 @@ helm repo update
 helm install cilium cilium/cilium --namespace kube-system
 ```
 
+- Set Prometheus Metrics Port for Cilium:
+```bash
+kubectl set env -n kube-system ds/cilium CILIUM_PROMETHEUS_SERVE_ADDR=":9090"
+```
+
+- Restart Cilium DaemonSet:
+```bash
+kubectl rollout restart ds/cilium -n kube-system
+```
+
 - Verify Cilium Insstallation:
 ```bash
 kubectl get pods -n kube-system | grep cilium
 ```
 
-- Customize the Cilium configuration during installation:
+- Customize the Cilium configuration during installation (if needed):
 ```bash
 helm upgrade cilium cilium/cilium -f values.yaml
 ```
@@ -99,9 +108,10 @@ Cilium-agent:
 ```bash
 kubectl port-forward -n kube-system svc/cilium-agent-metrics 9190:9190
 ```
+
 Cilium-operator:
 ```bash
-kubectl port-forward -n kube-system svc/cilium-operator-metrics 9091:9091
+kubectl port-forward -n kube-system svc/cilium-operator-metrics 9963:9963
 ```
 
 4. Allow Prometheus to scrape metrics:
@@ -111,11 +121,10 @@ kubectl apply -f prometheus-config.yaml
 
 5. Verify Prometheus Scraping:
 ```bash
-# kubectl port-forward -n monitoring svc/prometheus-server 9092:9090
 kubectl port-forward -n monitoring svc/prometheus-server 9090:9090
 ```
 
-6. Visit http://localhost:9092/targets to see targets and make sure the operator and agents are on the "UP" state 
+6. Visit http://localhost:9090/targets to see targets and make sure the operator and agents are on the "UP" state 
 
 Query: {__name__=~"cilium_.*"}
 
@@ -137,46 +146,10 @@ Pull from here (agent):
 
 Pull from here (operator):
 https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json
-**check why some are unkown**
 
-<!-- 1.  Setting up Kubernetes Environment with Cilium
-2.  Deploy Prometheus and Grafana
-3. Set Up iPerf3 Testing Pods
-4. Modify iPerf3 Test Scripts for Metrics Collection
-5.  Scrape iPerf3 Metrics into Prometheus **
-6. Visualize iPerf3 Metrics in Grafana
- -->
-
-1.  Setting up Kubernetes Environment with Cilium
-2.  Deploy Prometheus and Grafana
+1. Setting up Kubernetes Environment with Cilium
+2. Deploy Prometheus and Grafana
 3. Scrape CIlium Metrics into Prometheus
 4. Visualize cilium Metrics in Grafana
 
-kubectl get pods -n kube-system | grep cilium
-helm upgrade cilium cilium/cilium --namespace kube-system -f values.yaml
-
-(kubectl get pods -n monitoring) crashloopbackoff for iperf3-lcient-server
-Resume
-Implemented Prometheus and Grafana to monitor and visualize Cilium metrics, enabling detailed insights into cluster networking performance and security policies.
-Configured and optimized Prometheus to scrape metrics from Cilium agents and operators, ensuring real-time monitoring and diagnostics.
-Built and deployed end-to-end observability solutions, leveraging Helm for seamless management of Kubernetes resources and efficient troubleshooting.
-
-1. Setting up Kubernetes Environment with Cilium
-
-Create a Kind cluster and deploy Cilium as a CNI plugin with Helm.
-Verify Cilium installation with kubectl.
-2. Deploy Prometheus and Grafana
-
-Use Helm to deploy Prometheus and Grafana into the cluster.
-Configure Grafana for local access via port forwarding.
-3. Scrape Cilium Metrics into Prometheus
-
-Expose Cilium metrics with cilium-agent-metrics-service.yaml and cilium-operator-metrics-service.yaml.
-Add Prometheus scrape configurations using prometheus-config.yaml.
-Verify Prometheus is scraping Cilium metrics by visiting http://localhost:9092/targets.
-4. Visualize Metrics in Grafana
-
-Access the Grafana dashboard via http://localhost:3000.
-Add Prometheus as a data source in Grafana.
-Import prebuilt dashboards for Cilium (links provided for agent and operator dashboards).
-Query metrics like {__name__=~"cilium_.*"} to visualize network performance and policy enforcement.
+kubectl set env -n kube-system ds/cilium CILIUM_PROMETHEUS_SERVE_ADDR=":9090"

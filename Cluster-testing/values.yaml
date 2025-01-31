@@ -11,5 +11,5 @@ hubble:
     hostPort: 9965
 metrics:
   enabled: true
-promethues:
+prometheus:
   enabled: true
