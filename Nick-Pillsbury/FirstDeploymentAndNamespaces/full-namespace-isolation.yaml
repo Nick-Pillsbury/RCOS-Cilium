@@ -1,0 +1,23 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: team-a
+spec:
+  endpointSelector: {}  # Apply to all pods in team-a
+  ingress: []  # Block all ingress traffic
+  egress:
+  - toEntities:
+    - cluster  # Only allow access to Kubernetes API (if needed)
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: team-b
+spec:
+  endpointSelector: {}  # Apply to all pods in team-b
+  ingress: []  # Block all ingress traffic
+  egress:
+  - toEntities:
+    - cluster  # Only allow access to Kubernetes API (if needed)
