@@ -1,0 +1,29 @@
+Start Minikube with Cilium:
+    minikube start --memory=4096 --cpus=2 --network-plugin=cni --cni=cilium
+    kubectl get nodes
+
+Verify Cilium is Running:
+    cilium status
+
+Apply Namespaces:
+    kubectl apply -f namespaces.yaml
+
+Create Deployment & Service for team-a:
+    kubectl apply -f team-a.yaml
+    kubectl get pods -n team-a
+    kubectl get svc -n team-a
+
+Create Deployment & Service for team-b:
+    kubectl apply -f team-b.yaml
+    kubectl get pods -n team-b
+    kubectl get svc -n team-b
+
+Apply Namespace Isolation with Cilium Network Policies:
+    kubectl apply -f full-namespace-isolation.yaml
+
+Test Namespace isolation:
+    kubectl run -n team-a curl-pod --image=curlimages/curl --restart=Never -- sleep 3600
+    kubectl get svc -n team-a
+    kubectl exec -n team-a curl-pod -- curl -sS 10.96.123.45:80
+    kubectl get svc -n team-b
+    kubectl exec -n team-a curl-pod -- curl -sS 10.96.67.89:80

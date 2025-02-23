@@ -1,0 +1,23 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: team-a
+spec:
+  endpointSelector: {}
+  ingress: []
+  egress:
+  - toEntities:
+    - cluster
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: team-b
+spec:
+  endpointSelector: {}
+  ingress: []
+  egress:
+  - toEntities:
+    - cluster
