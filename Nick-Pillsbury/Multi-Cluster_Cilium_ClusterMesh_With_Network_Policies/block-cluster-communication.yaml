@@ -1,0 +1,21 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: block-a-to-b
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        io.cilium.k8s.policy.cluster: cluster-a
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: block-b-to-a
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        io.cilium.k8s.policy.cluster: cluster-b

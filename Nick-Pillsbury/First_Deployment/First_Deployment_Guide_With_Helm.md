@@ -4,7 +4,7 @@
 
 ## Prerequisites
 Before starting, ensure you have completed the following:
-- Ubuntu 20.04+ system with at least 4 GB RAM, 2 CPUs, and 20 GB of disk space.
+- Ubuntu 20.04+ system with at least 4 GB RAM, 2 CPUs cores, and 20 GB of disk space.
 - Docker, Minikube, kubectl, Helm, and Cilium repositories installed
 
 ---

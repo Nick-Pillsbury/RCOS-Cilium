@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: block-team-a-to-team-b
+  namespace: team-b
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: team-a

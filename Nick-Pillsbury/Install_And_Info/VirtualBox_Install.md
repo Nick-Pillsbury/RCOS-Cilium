@@ -63,8 +63,10 @@ Ensure your system meets the following requirements:
 2. In the VirtualBox menu, click **Devices** → **Insert Guest Additions CD Image**.
 3. Open a terminal and run:
    ```bash
-   sudo apt update && sudo apt install -y build-essential dkms linux-headers-$(uname -r)
-   sudo mount /dev/cdrom /mnt
+   sudo apt update
+   sudo apt upgrade
+   sudo apt-get install build-essential gcc make perl dkms tar bzip2
+   
    sudo /mnt/VBoxLinuxAdditions.run
    ```
 4. Restart the VM to apply changes.
