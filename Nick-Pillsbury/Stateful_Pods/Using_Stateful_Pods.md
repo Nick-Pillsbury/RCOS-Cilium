@@ -1,19 +1,23 @@
-# Running Docker Applications with Cilium Example
+# Deploying an Nginx Deployment Visible Externally
+
+## What is Nginx?
+Nginx is a high-performance, open-source web server that can also function as a reverse proxy, load balancer, and API gateway. It is widely used for serving web applications due to its speed, scalability, and low resource consumption.
+
+## What are we suing Nginx for?
+we are using Nginx to serve a website to external traffic within a Kubernetes deployment. It acts as a reverse proxy and load balancer, efficiently managing incoming requests and routing them to the appropriate backend services. This setup ensures high availability and scalability for the website.
 
 ---
-
 ## Prerequisites
-- `kubectl` and `helm` installed on your local machine.
-- A Kubernetes cluster with **Cilium installed and running**.
-- Access to **Docker Hub**.
+- A Kubernetes cluster
+- `kubectl` installed and configured
+- Node(s) with an external IP (for NodePort access)
 
 ---
 
-## Deploying Prebuilt Docker Applications
-We will deploy some prebuilt Docker applications into Kubernetes and use **Cilium** to enforce network policies.
+## Step 1: Deploy Nginx
+Create a deployment for Nginx.
 
-
-### **Step 1: Deploy an Nginx Web Server**
+### nginx-deployment.yaml
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -41,98 +45,53 @@ Apply the deployment:
 kubectl apply -f nginx-deployment.yaml
 ```
 
-Expose it using a **Service**:
-```sh
-kubectl expose deployment nginx-deployment --type=ClusterIP --port=80 --target-port=80
-```
+---
 
+## Step 2: Expose Nginx Externally
+Create a NodePort service to make Nginx accessible externally.
 
-### **Step 2: Deploy a Redis Cache**
+### nginx-service.yaml
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: redis-deployment
+  name: nginx-service
   namespace: default
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: redis
-  template:
-    metadata:
-      labels:
-        app: redis
-    spec:
-      containers:
-      - name: redis
-        image: redis:latest
-        ports:
-        - containerPort: 6379
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080  # Choose a port in the 30000-32767 range
+  type: NodePort
 ```
-Apply the deployment:
+Apply the service:
 ```sh
-kubectl apply -f redis-deployment.yaml
-```
-
-Expose it using a **Service**:
-```sh
-kubectl expose deployment redis-deployment --type=ClusterIP --port=6379 --target-port=6379
+kubectl apply -f nginx-service.yaml
 ```
 
 ---
 
-## **Securing Applications with Cilium**
-By default, Kubernetes allows unrestricted communication between pods. **Cilium** enables fine-grained **network policies** to restrict access between services.
-
-### **Step 3: Apply a Cilium Network Policy to Secure Redis**
-This policy **only allows traffic to Redis from Nginx pods**, blocking all other access.
-
-```yaml
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: restrict-redis-access
-  namespace: default
-spec:
-  endpointSelector:
-    matchLabels:
-      app: redis
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        app: nginx
-```
-Apply the policy:
+## Step 3: Access the Nginx Webpage
+Find the external IP of a node:
 ```sh
-kubectl apply -f restrict-redis-access.yaml
+kubectl get nodes -o wide
+```
+Use the node's IP and NodePort to access the Nginx web server:
+```
+http://<NODE_IP>:30080
 ```
 
-### **Step 4: Verify Network Policies**
-1. **Test allowed traffic:**
-   ```sh
-   kubectl run test-nginx --image=nginx --restart=Never -it --rm -- curl redis.default.svc.cluster.local:6379
-   ```
-   This should **succeed** because Nginx is allowed.
+---
 
-2. **Test blocked traffic:**
-   ```sh
-   kubectl run test-busybox --image=busybox --restart=Never -it --rm -- nc -zv redis.default.svc.cluster.local 6379
-   ```
-   This should **fail** because BusyBox is not allowed by the policy.
+## Summary
+- Deployed an Nginx web server using Kubernetes.
+- Exposed it externally using a **NodePort** service.
 
 ---
 
-## **Summary**
-- Deployed prebuilt **Nginx** and **Redis** applications using Kubernetes.
-- Used **Cilium Network Policies** to **restrict access** to Redis.
-- Verified policies by testing allowed and blocked traffic.
-
-Cilium enables advanced security and observability for Kubernetes workloads, making it easier to manage **network isolation, security enforcement, and visibility.**
-
----
-
-## **Links**
-
-[Cilium Network Policies](https://docs.cilium.io/en/stable/security/network-policies/)
-
+## Links
+[Nginx Webpage](https://nginx.org/)
+[Geeks For Geeks Example](https://www.geeksforgeeks.org/how-to-deploy-nginx-in-kubernetes/)
