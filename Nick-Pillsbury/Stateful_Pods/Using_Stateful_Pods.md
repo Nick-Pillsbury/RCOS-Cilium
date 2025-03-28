@@ -3,7 +3,7 @@
 ## What is Nginx?
 Nginx is a high-performance, open-source web server that can also function as a reverse proxy, load balancer, and API gateway. It is widely used for serving web applications due to its speed, scalability, and low resource consumption.
 
-## What are we suing Nginx for?
+## What are we using Nginx for?
 we are using Nginx to serve a website to external traffic within a Kubernetes deployment. It acts as a reverse proxy and load balancer, efficiently managing incoming requests and routing them to the appropriate backend services. This setup ensures high availability and scalability for the website.
 
 ---
@@ -64,7 +64,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30080  # Choose a port in the 30000-32767 range
+      nodePort: 30080
   type: NodePort
 ```
 Apply the service:
