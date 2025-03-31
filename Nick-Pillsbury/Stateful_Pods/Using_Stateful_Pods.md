@@ -83,6 +83,10 @@ Use the node's IP and NodePort to access the Nginx web server:
 ```
 http://<NODE_IP>:30080
 ```
+Or
+```sh
+minikube service nginx-service --url
+```
 
 ---
 
