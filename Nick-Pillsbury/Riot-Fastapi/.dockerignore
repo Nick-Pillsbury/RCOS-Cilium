@@ -6,8 +6,6 @@ __pycache__/
 
 # Ignore virtual environments
 venv/
-.env
-*.env
 
 # Ignore Git files
 .git/
@@ -25,5 +23,5 @@ logs/
 *.log
 tmp/
 
-# Ignore My Extra Files
+# Do not include your api key
 .env
