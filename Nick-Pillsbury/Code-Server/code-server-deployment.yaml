@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - name: code-server
+        image: yourusername/code-server-custom
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: code-server-config
+          mountPath: /home/coder/.config
+        - name: code-server-workspace
+          mountPath: /workspace
+      volumes:
+      - name: code-server-config
+        persistentVolumeClaim:
+          claimName: code-server-home-pvc
+      - name: code-server-workspace
+        persistentVolumeClaim:
+          claimName: code-server-workspace-pvc
